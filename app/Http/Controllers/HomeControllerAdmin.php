@@ -35,8 +35,12 @@ class HomeControllerAdmin extends Controller
 
         // Contar solo los apartados aprobados de la farmacia asociada
         $apaCount = Apartado::where('estado', 'aprobado')
-            ->where('id_farmacia', $farmacia->id_farmacia) // Asegúrate de que esta columna exista
+            ->where('id_farmacia', $farmacia->id_farmacia) 
             ->count();
+                    
+        $apaCount2 = Apartado::where('estado', 'pendiente')
+        ->where('id_farmacia', $farmacia->id_farmacia) 
+        ->count();
 
         // Obtener resultados para gráficos filtrados por farmacia
         $resultados = Medicamento::select('pais_fabricacion', DB::raw('count(*) as total'), DB::raw('(pais_fabricacion) as pais1'))
@@ -57,7 +61,8 @@ class HomeControllerAdmin extends Controller
             'medCount' => $medCount,
             'resultados' => $resultados,
             'resultados1' => $resultados1,
-            'resultadosApa' => $apaCount
+            'resultadosApa' => $apaCount,
+            'resultadosApa2' => $apaCount2
         ]);
     }
 

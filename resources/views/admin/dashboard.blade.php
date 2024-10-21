@@ -24,7 +24,7 @@
                 <div class="small-box bg-info">
                     <div class="inner">
                         <h3>{{ $resultadosApa }}</h3>
-                        <p>Ordenes completadas</p>
+                        <p>Ordenes Completadas</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-bag"></i>
@@ -37,8 +37,8 @@
 
                 <div class="small-box bg-success">
                     <div class="inner">
-                        <h3>53<sup style="font-size: 20px">%</sup></h3>
-                        <p>porcentaje de compra</p>
+                        <h3>{{ $resultadosApa2 }}</h3>
+                        <p>Apartados Pendientes</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-stats-bars"></i>
