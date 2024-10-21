@@ -3,7 +3,7 @@
 @section('title', 'Home')
 
 @section('content_header')
-<h2>Panel administrativo</h2>
+<h2 class="text-center">Panel administrativo</h2>
 <hr>
 @stop
 
@@ -194,7 +194,7 @@
             labels: labels1,
             datasets: [{
                 label: 'Cantidad',
-                data: <?php echo json_encode($resultados->pluck('total')); ?>, 
+                data: <?php echo json_encode($resultados->pluck('total')); ?>,
                 backgroundColor: [
                     'rgba(255, 99, 132, 1)',
                     'rgba(255, 159, 64, 1)',

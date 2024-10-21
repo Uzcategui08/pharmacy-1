@@ -1,28 +1,27 @@
-
 @extends('adminlte::page')
 
 @section('title', 'Edit')
 
 @section('content_header')
-<h2>Editar Producto</h2>
+<h2 class="text-center">Editar Producto</h2>
 <hr>
 @stop
 
 @section('content')
 <form action="{{url('/admin/crud/index/'.$medicamentos->id_medicamento)}}" method="post" enctype="multipart/form-data">
-{{ csrf_field() }}
-{{method_field('PATCH')}}
+    {{ csrf_field() }}
+    {{method_field('PATCH')}}
 
-@include('admin/crud/formulario',['Modo' => 'editar'])
+    @include('admin/crud/formulario',['Modo' => 'editar'])
 
-<link rel="stylesheet" href="{{ asset('/build/assets/admin/admin.css') }}">
-@stop
+    <link rel="stylesheet" href="{{ asset('/build/assets/admin/admin.css') }}">
+    @stop
 
-@section('css')
+    @section('css')
     {{-- --}}
 
-@stop
+    @stop
 
-@section('js')
+    @section('js')
 
-@stop
+    @stop

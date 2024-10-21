@@ -20,12 +20,6 @@
 </div>
 
 <div class="form-group">
-    <label for="descripcion" class="control-label">{{'Descripción'}}</label>
-    <input type="text" class="form-control {{$errors->has('descripcion')?'is-invalid':''}}" name="descripcion" id="descripcion" value="{{isset($farmacias->descripcion)?$farmacias->descripcion:old('descripcion')}}">
-    {!!$errors->first('descripcion','<div class="invalid-feedback">:message</div>')!!}
-</div>
-
-<div class="form-group">
     <label for="rif" class="control-label">{{'RIF'}}</label>
     <input type="text" class="form-control {{$errors->has('descripcion')?'is-invalid':''}}" name="rif" id="rif" value="{{isset($farmacias->rif)?$farmacias->rif:old('rif')}}">
     {!!$errors->first('rif','<div class="invalid-feedback">:message</div>')!!}

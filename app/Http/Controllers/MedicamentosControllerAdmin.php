@@ -55,20 +55,20 @@ class MedicamentosControllerAdmin extends Controller
 
     public function store(Request $request)
     {
-        //
         $validatedData = $request->validate(
             [
                 'nombre' => 'required|string|max:100',
                 'fabricante' => 'required|string|max:100',
                 'descripcion' => 'required|string',
                 'pais_fabricacion' => 'required|string',
-                'categoria' => 'required|string',
+                'categoria' => 'required|not_in:', // Validación para asegurarse de que se seleccione una categoría válida
                 'id_farmacia' => 'required|integer',
                 'precio' => 'required|numeric|min:0',
                 'Foto' => 'required|max:10000|mimes:jpeg,png,jpg',
             ],
-            $mensaje = [
-                "required" => 'Rellenar el campo :attribute es obligatorio.'
+            [
+                "required" => 'Rellenar el campo :attribute es obligatorio.',
+                "categoria.not_in" => 'Por favor, seleccione una categoría válida.', // Mensaje de error específico para la categoría
             ]
         );
 
@@ -116,10 +116,10 @@ class MedicamentosControllerAdmin extends Controller
             'fabricante' => 'required|string|max:100',
             'descripcion' => 'required|string',
             'pais_fabricacion' => 'required|string',
-            'categoria' => 'required|string',
+            'categoria' => 'required|not_in:', // Validación para asegurarse de que se seleccione una categoría válida
             'id_farmacia' => 'required|integer',
             'precio' => 'required|numeric|min:0',
-            'Foto' => 'nullable|max:10000|mimes:jpeg,png,jpg',
+            'Foto' => 'required|max:10000|mimes:jpeg,png,jpg',
         ]);
 
         if ($request->hasFile('Foto')) {
@@ -127,7 +127,8 @@ class MedicamentosControllerAdmin extends Controller
             $validatedData += ['Foto' => 'required|max:10000|mimes:jpeg,png,jpg'];
         }
         $mensaje = [
-            "required" => 'Rellenar el campo :attribute es obligatorio.'
+            "required" => 'Rellenar el campo :attribute es obligatorio.',
+            "categoria.not_in" => 'Por favor, seleccione una categoría válida.' // Mensaje de error específico para la categoría
         ];
         $datosMedicamentos = request()->except(['_token', '_method']);
 
@@ -157,5 +158,4 @@ class MedicamentosControllerAdmin extends Controller
 
         return redirect('/admin/crud/index')->with('Mensaje', 'Producto eliminado con exito');
     }
-
 }

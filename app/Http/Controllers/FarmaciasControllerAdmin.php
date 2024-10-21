@@ -84,6 +84,7 @@ class FarmaciasControllerAdmin extends Controller
         //
         $validatedData = $request->validate([
             'nombre_razon_social' => 'required|string|max:100',
+             'imagen' => 'nullable|max:10000|mimes:jpeg,png,jpg',
   //          'descripcion' => 'required|string|max:100',
         ]);
 
@@ -97,12 +98,12 @@ class FarmaciasControllerAdmin extends Controller
         $datosFarmacias = request()->except(['_token', '_method']);
 
         if ($request->hasFile('imagen')) {
-            $farmacias = Farmacia::findOrFail($id);
+            $farmacias = Farmacia::where('id_farmacia',$id)->firstOrFail();
             Storage::delete('public/' . $farmacias->imagen);
             $datosFarmacias['imagen'] = $request->file('imagen')->store('farmacia', 'public');
         };
 
-        Farmacia::where('id_farmacia', '=', $id)->update($datosFarmacias);
+      $farmacias = Farmacia::where('id_farmacia', $id)->update($datosFarmacias);
 
         return redirect('admin/farmacia/farmacias')->with('Mensaje', 'Producto modificado con exito');
     }

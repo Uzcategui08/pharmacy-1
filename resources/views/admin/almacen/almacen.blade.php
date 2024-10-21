@@ -3,9 +3,16 @@
 @section('title', 'Almacen')
 
 @section('content_header')
-<h2>Almacen</h2>
+<h2 class="text-center">Almacen</h2>
 <hr>
 <a href="{{url('admin/almacen/almacen/create')}}" class="btn btn-primary">Agregar Lote</a>
+<div style="display:inline">
+    <div class="btn-group">
+        <input type="text" name="search" id="search">
+        <button type="disabled" value="Buscar" class="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i></button>
+    </div>
+</div>
+
 @stop
 
 @section('content')
@@ -14,7 +21,7 @@
 <table class="table table-light">
     <thead class="thead-light w-100">
         <tr>
-        <th>Foto</th>
+            <th>Foto</th>
             <th>Nombre</th>
             <th>Cantidad</th>
             <th>Lote</th>
@@ -25,16 +32,16 @@
     <tbody>
         @foreach($Almacen as $almacen)
         <tr>
-<!-- Mostrar solo el nombre y foto del medicamento relacionado -->
-@if($almacen->medicamento) <!-- Asegúrate de tener una relación definida -->
-    <td data-label="Foto">
-        <img src="{{ asset('storage/' . $almacen->medicamento->Foto) }}" width="100px" class="rounded">
-    </td>
-    <td data-label="Nombre">{{ $almacen->medicamento->nombre }}</td>
-@else
-    <td data-label="Foto">No disponible</td>
-    <td data-label="Nombre">No disponible</td>
-@endif
+            <!-- Mostrar solo el nombre y foto del medicamento relacionado -->
+            @if($almacen->medicamento) <!-- Asegúrate de tener una relación definida -->
+            <td data-label="Foto">
+                <img src="{{ asset('storage/' . $almacen->medicamento->Foto) }}" width="100px" class="rounded">
+            </td>
+            <td data-label="Nombre">{{ $almacen->medicamento->nombre }}</td>
+            @else
+            <td data-label="Foto">No disponible</td>
+            <td data-label="Nombre">No disponible</td>
+            @endif
             <td data-label="Cantidad">{{$almacen->cantidad_disponible}}</td>
             <td data-label="Lote">{{$almacen->numero_lote}}</td>
             <td data-label="Vencimiento">{{$almacen->fecha_vencimiento}}</td>
@@ -60,5 +67,32 @@
 @stop
 
 @section('js')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('search');
+        const tableRows = document.querySelectorAll('.table tbody tr');
+
+        searchInput.addEventListener('keyup', function() {
+            const searchTerm = searchInput.value.toLowerCase();
+
+            tableRows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                let rowContainsSearchTerm = false;
+
+                cells.forEach(cell => {
+                    if (cell.textContent.toLowerCase().includes(searchTerm)) {
+                        rowContainsSearchTerm = true;
+                    }
+                });
+
+                if (rowContainsSearchTerm) {
+                    row.style.display = ''; // Mostrar fila
+                } else {
+                    row.style.display = 'none'; // Ocultar fila
+                }
+            });
+        });
+    });
+</script>
 <script rel="stylesheet" href="{{ asset('/build/assets/admin/index.js') }}"></script>
 @stop

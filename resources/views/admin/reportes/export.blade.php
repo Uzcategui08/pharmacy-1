@@ -3,7 +3,7 @@
 @section('title', 'Medicamentos Reportes')
 
 @section('content_header')
-<h2>Medicamentos </h2>
+<h2 class="text-center">Medicamentos </h2>
 <hr>
 <a class="btn btn-success" href="{{ route('export.pdf', ['busqueda' => $busqueda]) }}" target="_blank">Descargar reporte</a>
 

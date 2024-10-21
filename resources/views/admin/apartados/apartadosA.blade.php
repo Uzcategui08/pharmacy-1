@@ -5,6 +5,12 @@
 @section('content_header')
 <h1 class="text-center">Apartados</h1>
 <hr>
+<div style="display:inline">
+  <div class="btn-group">
+    <input type="text" name="search" id="search">
+    <button type="disabled" value="Buscar" class="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i></button>
+  </div>
+</div>
 @stop
 
 @section('content')
@@ -41,7 +47,7 @@
           </button>
         </form>
         |
-        <form method="post" action="{{ url('admin/apartados/apartadosA' .$apartado->id) }}" style="display:inline">
+        <form method="post" action="{{ url('admin/apartados/apartadosA/' .$apartado->id) }}" style="display:inline">
           {{csrf_field()}}
           {{method_field('DELETE')}}
           <button class="btn btn-danger" type="submit" onclick="return confirm('Borrar?');">
@@ -66,5 +72,31 @@
 @stop
 
 @section('js')
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('search');
+    const tableRows = document.querySelectorAll('.table tbody tr');
 
+    searchInput.addEventListener('keyup', function() {
+      const searchTerm = searchInput.value.toLowerCase();
+
+      tableRows.forEach(row => {
+        const cells = row.querySelectorAll('td');
+        let rowContainsSearchTerm = false;
+
+        cells.forEach(cell => {
+          if (cell.textContent.toLowerCase().includes(searchTerm)) {
+            rowContainsSearchTerm = true;
+          }
+        });
+
+        if (rowContainsSearchTerm) {
+          row.style.display = ''; // Mostrar fila
+        } else {
+          row.style.display = 'none'; // Ocultar fila
+        }
+      });
+    });
+  });
+</script>
 @stop

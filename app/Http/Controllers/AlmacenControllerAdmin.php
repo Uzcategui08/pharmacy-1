@@ -15,32 +15,32 @@ class AlmacenControllerAdmin extends Controller
      * Display a listing of the resource.
      */
     // En el modelo Almacen
-     //
+    //
 
-        public function index()
-        {
-            $Almacen = $this->mostrarApartados();
+    public function index()
+    {
+        $Almacen = $this->mostrarApartados();
 
-            // Verifica si se encontraron farmacias
-            if (is_null($Almacen)) {
-                return redirect()->back()->withErrors('Este administrador no tiene una farmacia asociada.');
-            }
-            return view('admin/almacen/almacen',compact('Almacen'));
+        // Verifica si se encontraron farmacias
+        if (is_null($Almacen)) {
+            return redirect()->back()->withErrors('Este administrador no tiene una farmacia asociada.');
+        }
+        return view('admin/almacen/almacen', compact('Almacen'));
+    }
+
+    public function mostrarApartados()
+    {
+        $usuario = auth()->user();
+        $Almacen = $usuario->farmacias()->first();
+
+        if (!$Almacen) {
+            // Retorna null o lanza una excepción si no hay farmacia
+            return null;
         }
 
-        public function mostrarApartados()
-        {
-            $usuario = auth()->user();
-            $Almacen = $usuario->farmacias()->first();
-
-            if (!$Almacen) {
-                // Retorna null o lanza una excepción si no hay farmacia
-                return null;
-            }
-
-            // Obtiene las farmacias asociadas
-            return Inventario::where('id_farmacia', $Almacen->id_farmacia)->get();
-        }
+        // Obtiene las farmacias asociadas
+        return Inventario::where('id_farmacia', $Almacen->id_farmacia)->get();
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -69,7 +69,7 @@ class AlmacenControllerAdmin extends Controller
             [
                 'id_medicamento' => 'required|integer',
                 'id_farmacia' => 'required|integer',
-                'numero_lote' => 'required|integer',
+                'numero_lote' => 'required|string', 
                 'fecha_vencimiento' => 'required|date',
                 'cantidad_disponible' => 'required|integer',
             ],
@@ -109,14 +109,18 @@ class AlmacenControllerAdmin extends Controller
     public function update(Request $request, Inventario $id)
     {
         //
-        $validatedData = $request->validate( [
-            'id_medicamento' => 'required|integer',
-            'id_farmacia' => 'required|integer',
-            'numero_lote' => 'required|integer',
-            'fecha_vencimiento' => 'required|date',
-            'cantidad_disponible' => 'required|integer',
-        ]);
-
+        $validatedData = $request->validate(
+            [
+                'id_medicamento' => 'required|integer',
+                'id_farmacia' => 'required|integer',
+                'numero_lote' => 'required|string', 
+                'fecha_vencimiento' => 'required|date',
+                'cantidad_disponible' => 'required|integer',
+            ],
+            $mensaje = [
+                "required" => 'Rellenar el campo :attribute es obligatorio.'
+            ]
+        );
 
 
         return redirect('admin/almacen/almacen')->with('Mensaje', 'Producto modificado con exito');

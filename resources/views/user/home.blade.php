@@ -149,7 +149,7 @@
                     <div class="product-card">
                         <div class="product-img-container">
                             @if($medicamento->Foto)
-                            <img src="{{asset('storage').'/'.$medicamento->Foto}}"  alt="{{ $medicamento->nombre }}" class="product-img card-img-top">
+                            <img src="{{asset('storage').'/'.$medicamento->Foto}}" alt="{{ $medicamento->nombre }}" class="product-img card-img-top">
                             @else
                             <img src="https://via.placeholder.com/300x300?text={{ $medicamento->nombre }}" alt="Sin Imagen" class="product-img card-img-top">
                             @endif
@@ -196,7 +196,7 @@
                     <div class="col-md-3 mb-4 product-item">
                         <div class="card position-relative">
                             @if($medicamento->Foto)
-                            <img src="{{asset('storage').'/'.$medicamento->Foto}}"  alt="{{ $medicamento->nombre }}" class="product-img card-img-top">
+                            <img src="{{asset('storage').'/'.$medicamento->Foto}}" alt="{{ $medicamento->nombre }}" class="product-img card-img-top">
                             @else
                             <img src="https://via.placeholder.com/300x300?text={{ $medicamento->nombre }}" alt="Sin Imagen" class="product-img card-img-top">
                             @endif

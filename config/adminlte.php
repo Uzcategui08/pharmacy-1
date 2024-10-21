@@ -308,7 +308,7 @@ return [
         // Sidebar items:
         ['header' => 'ADMINISTRACION'],
         [
-            'text' => 'Productos',
+            'text' => 'Medicamentos',
             'icon' => 'fas fa-warehouse',
             'submenu' => [
                 [
@@ -328,7 +328,7 @@ return [
             'icon' => 'fas fa-book-medical',
             'submenu' => [
                 [
-                    'text' => 'Productos',
+                    'text' => 'Medicamentos',
                     'url' => 'admin/reportes/export',
                     'icon' => 'fas fa-fw fa-file',
                 ],
@@ -358,7 +358,7 @@ return [
         ],
         [
             'text' => 'Perfil',
-            'url' => 'admin/profile',
+            'url' => 'admin/edit',
             'icon' => 'fas fa-fw fa-user',
         ],
     ],

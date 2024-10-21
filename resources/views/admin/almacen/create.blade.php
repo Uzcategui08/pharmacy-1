@@ -3,24 +3,24 @@
 @section('title', 'Agregar numero_lote')
 
 @section('content_header')
-<h2>Agregar numero_lote</h2>
+<h2 class="text-center">Agregar Lote</h2>
 <hr>
 @stop
 
 @section('content')
 <form action="{{ route('almacen.store')}}" class="form-horizontal" method="POST" enctype="multipart/form-data">
-@csrf
-<div class="form-group">
-    <label for="Nombre" class="control-label">{{ 'Nombre' }}</label>
-    <select name="id_medicamento" id="medicamentoSelect">
-        <option value="">Seleccione un medicamento</option>
-        @foreach ($Medicamentos as $Medicamento)
+    @csrf
+    <div class="form-group">
+        <label for="Nombre" class="control-label">{{ 'Nombre' }}</label>
+        <select name="id_medicamento" id="medicamentoSelect">
+            <option value="">Seleccione un medicamento</option>
+            @foreach ($Medicamentos as $Medicamento)
             <option value="{{ $Medicamento['id_medicamento'] }}">{{ $Medicamento['nombre'].' - '.$Medicamento['fabricante'] }}</option>
-        @endforeach
-    </select>
-    {!! $errors->first('Nombre', '<div class="invalid-feedback">:message</div>') !!}
-    <div class="invalid-feedback"></div>
-</div>
+            @endforeach
+        </select>
+        {!! $errors->first('Nombre', '<div class="invalid-feedback">:message</div>') !!}
+        <div class="invalid-feedback"></div>
+    </div>
 
     <div class="form-group">
         <label for="fecha_vencimiento" class="control-label">{{ 'fecha_vencimiento' }}</label>
@@ -30,14 +30,14 @@
     </div>
 
     <div class="form-group">
-        <label for="numero_lote" class="control-label">{{ 'numero_lote' }}</label>
-        <input type="number" class="form-control {{ $errors->has('numero_lote') ? 'is-invalid' : '' }}" name="numero_lote" id="numero_lote" value="{{ old('numero_lote') }}">
+        <label for="numero_lote" class="control-label">{{ 'numero de lote' }}</label>
+        <input type="text" class="form-control {{ $errors->has('numero_lote') ? 'is-invalid' : '' }}" name="numero_lote" id="numero_lote" value="{{ old('numero_lote') }}">
         {!! $errors->first('numero_lote', '<div class="invalid-feedback">:message</div>') !!}
         <div class="invalid-feedback"></div>
     </div>
 
     <div class="form-group">
-        <label for="cantidad_disponible" class="control-label">{{ 'cantidad_disponible' }}</label>
+        <label for="cantidad_disponible" class="control-label">{{ 'cantidad disponible' }}</label>
         <input type="number" class="form-control {{ $errors->has('cantidad_disponible') ? 'is-invalid' : '' }}" name="cantidad_disponible" id="cantidad_disponible" value="{{ old('cantidad_disponible') }}">
         {!! $errors->first('cantidad_disponible', '<div class="invalid-feedback">:message</div>') !!}
         <div class="invalid-feedback"></div>
@@ -65,8 +65,9 @@
         font-size: 1rem;
         text-align: center;
     }
+
     .select2-container--default .select2-selection--single .select2-selection__rendered {
-    line-height: 18px;
+        line-height: 18px;
     }
 </style>
 

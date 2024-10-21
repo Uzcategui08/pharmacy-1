@@ -88,8 +88,16 @@ class ApartadosAdmin extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
         //
+        $medicamentos = Apartado::where('id', $id)->firstOrFail();
+
+            Apartado::destroy($id);
+        
+
+
+        return redirect('/admin/apartados/apartadosA')->with('Mensaje', 'Producto eliminado con exito');
     }
 }
+
