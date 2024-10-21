@@ -69,7 +69,7 @@ class AlmacenControllerAdmin extends Controller
             [
                 'id_medicamento' => 'required|integer',
                 'id_farmacia' => 'required|integer',
-                'numero_lote' => 'required|string', 
+                'numero_lote' => 'required|string',
                 'fecha_vencimiento' => 'required|date',
                 'cantidad_disponible' => 'required|integer',
             ],
@@ -98,32 +98,41 @@ class AlmacenControllerAdmin extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Inventario $almacen)
+
+    public function edit($id)
     {
-        //
+        $almacen = Inventario::where('id_inventario', $id)->firstOrFail();
+        $farmacia = Auth::user()->farmacias->first();
+
+        if ($farmacia) {
+            $datos['Medicamentos'] = $farmacia->medicamentos;
+        } else {
+            $datos['Medicamentos'] = collect();
+        }
+
+        return view('/admin/almacen/edit', compact('almacen'), $datos);
     }
+
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Inventario $id)
+    public function update(Request $request, $id)
     {
-        //
-        $validatedData = $request->validate(
-            [
-                'id_medicamento' => 'required|integer',
-                'id_farmacia' => 'required|integer',
-                'numero_lote' => 'required|string', 
-                'fecha_vencimiento' => 'required|date',
-                'cantidad_disponible' => 'required|integer',
-            ],
-            $mensaje = [
-                "required" => 'Rellenar el campo :attribute es obligatorio.'
-            ]
-        );
+        $validatedData = $request->validate([
+            'id_medicamento' => 'required|integer',
+            'id_farmacia' => 'required|integer',
+            'numero_lote' => 'required|string',
+            'fecha_vencimiento' => 'required|date',
+            'cantidad_disponible' => 'required|integer',
+        ], [
+            "required" => 'Rellenar el campo :attribute es obligatorio.'
+        ]);
+        $datosAlmacen = request()->except(['_token', '_method']);
+        $inventario = Inventario::findOrFail($id);
+        $inventario->update($datosAlmacen);
 
-
-        return redirect('admin/almacen/almacen')->with('Mensaje', 'Producto modificado con exito');
+        return redirect()->route('almacen.index')->with('Mensaje', 'Producto modificado con exito');
     }
 
     /**

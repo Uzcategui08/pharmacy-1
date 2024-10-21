@@ -119,12 +119,12 @@ class MedicamentosControllerAdmin extends Controller
             'categoria' => 'required|not_in:', // Validación para asegurarse de que se seleccione una categoría válida
             'id_farmacia' => 'required|integer',
             'precio' => 'required|numeric|min:0',
-            'Foto' => 'required|max:10000|mimes:jpeg,png,jpg',
+            'Foto' => 'max:10000|mimes:jpeg,png,jpg',
         ]);
 
         if ($request->hasFile('Foto')) {
 
-            $validatedData += ['Foto' => 'required|max:10000|mimes:jpeg,png,jpg'];
+            $validatedData += ['Foto' => 'max:10000|mimes:jpeg,png,jpg'];
         }
         $mensaje = [
             "required" => 'Rellenar el campo :attribute es obligatorio.',

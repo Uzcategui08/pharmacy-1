@@ -39,16 +39,16 @@ class HomeControllerAdmin extends Controller
             ->count();
 
         // Obtener resultados para gráficos filtrados por farmacia
-        $resultados = Medicamento::select('pais_fabricacion', DB::raw('count(*) as total'))
+        $resultados = Medicamento::select('pais_fabricacion', DB::raw('count(*) as total'), DB::raw('(pais_fabricacion) as pais1'))
             ->where('id_farmacia', $farmacia->id_farmacia)
             ->groupBy('pais_fabricacion')
-            ->orderBy('pais_fabricacion')
+            ->orderBy('pais1')
             ->get();
 
-        $resultados1 = Medicamento::select('categoria', DB::raw('count(*) as total'))
+        $resultados1 = Medicamento::select('categoria', DB::raw('count(*) as total'), DB::raw('(categoria) as cat'))
             ->where('id_farmacia', $farmacia->id_farmacia)
             ->groupBy('categoria')
-            ->orderBy('categoria')
+            ->orderBy('cat')
             ->get();
 
         // Pasar la cantidad a la vista
